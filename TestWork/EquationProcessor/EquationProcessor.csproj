@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Contracts\Contracts.csproj" />
+      <ProjectReference Include="..\Utils\Utils.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="SimpleEquationProcessorImpl.Display.cs">
+        <DependentUpon>SimpleEquationProcessorImpl.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>

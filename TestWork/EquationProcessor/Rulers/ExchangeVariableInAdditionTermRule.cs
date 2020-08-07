@@ -3,11 +3,12 @@ using Contracts.Terms;
 
 namespace EquationProcessor.Rulers
 {
-    public class ExchangeConstantInAdditionTerm : IRule
+    public class ExchangeVariableInAdditionTermRule : IRule
     {
         public bool TermMatchRule(EquationTermBase term)
         {
             bool matched = term is EquationBinaryOperationBase operation &&
+                           operation.Type == OperationsEnum.Addition &&
                            (
                                MatchShiftRight(operation) ||
                                MatchShiftLeft(operation)
@@ -25,12 +26,12 @@ namespace EquationProcessor.Rulers
             {
                 var leftOperation = (EquationBinaryOperationBase) operation.Left;
             
-                result = new AdditionOperation(leftOperation.Left, new AdditionOperation(leftOperation.Right, operation.Right));
+                result = new AdditionOperation(leftOperation.Right, new AdditionOperation(leftOperation.Left, operation.Right));
             }
             else
             {
                 var rightOperation = (EquationBinaryOperationBase) operation.Right;
-                result = new AdditionOperation(rightOperation.Left, new AdditionOperation(rightOperation.Right, operation.Left));
+                result = new AdditionOperation(rightOperation.Right, new AdditionOperation(rightOperation.Left, operation.Left));
             }
 
             return result;
@@ -41,13 +42,13 @@ namespace EquationProcessor.Rulers
             leftOperation.Type == OperationsEnum.Addition &&
             leftOperation.Left is EquationVariable &&
             leftOperation.Right is EquationConstant &&
-            operation.Right is EquationConstant;
+            operation.Right is EquationVariable;
 
         private static bool MatchShiftLeft(EquationBinaryOperationBase operation) =>
-            operation.Right is EquationBinaryOperationBase leftOperation &&
-            leftOperation.Type == OperationsEnum.Addition &&
-            leftOperation.Left is EquationVariable &&
-            leftOperation.Right is EquationConstant &&
-            operation.Left is EquationConstant;
+            operation.Right is EquationBinaryOperationBase rightOperation &&
+            rightOperation.Type == OperationsEnum.Addition &&
+            rightOperation.Left is EquationVariable &&
+            rightOperation.Right is EquationConstant &&
+            operation.Left is EquationVariable;
     }
 }

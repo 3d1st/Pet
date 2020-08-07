@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Contracts.Operations;
 using Contracts.Terms;
 using static Contracts.Operations.OperationsEnumHelper;
@@ -11,7 +12,7 @@ namespace EquationProcessor
             term switch
             {
                 EquationVariable variable                   => char.ToString(variable.Name),
-                EquationConstant constant                   => constant.Value.ToString(),
+                EquationConstant constant                   => constant.Value.ToString(CultureInfo.InvariantCulture),
                 EquationBinaryOperationBase binaryOperation => DisplayBinaryOperation(binaryOperation),
                 _                                           => throw new ArgumentException("Unsupported argument type", nameof(term))
             };
@@ -26,13 +27,25 @@ namespace EquationProcessor
                 case OperationsEnum.Multiplication:
                 case OperationsEnum.Division:
                 case OperationsEnum.Exponentiation:
-                    return (operation.Left is EquationBinaryOperationBase
-                               ? BracketOpen + Display(operation.Left) + BracketClose
-                               : Display(operation.Left)) +
+                    return (
+                               operation.Left is EquationBinaryOperationBase leftOperation &&
+                               (
+                                   leftOperation.Type == OperationsEnum.Addition ||
+                                   leftOperation.Type == OperationsEnum.Subtraction
+                               )
+                                   ? BracketOpen + Display(operation.Left) + BracketClose
+                                   : Display(operation.Left)
+                           ) +
                            DisplayType(operation.Type) +
-                           (operation.Right is EquationBinaryOperationBase
-                               ? BracketOpen + Display(operation.Right) + BracketClose
-                               : Display(operation.Right));
+                           (
+                               operation.Right is EquationBinaryOperationBase rightOperation &&
+                               (
+                                   rightOperation.Type == OperationsEnum.Addition ||
+                                   rightOperation.Type == OperationsEnum.Subtraction
+                               )
+                                   ? BracketOpen + Display(operation.Right) + BracketClose
+                                   : Display(operation.Right)
+                           );
                 default:
                     throw new ArgumentOutOfRangeException();
             }

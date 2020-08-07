@@ -49,6 +49,15 @@ namespace TestWorkTest.EquationProcessor
         [InlineData("k5", "5*k")]
         [InlineData("2 + x -4 + 2", "x")]
         [InlineData("x + x", "2*x")]
+        [InlineData("x - x", "0")]
+        [InlineData("x + 2 + x", "2*x+2")]
+        [InlineData("2x + x", "3*x")]
+        [InlineData("x + 2x", "3*x")]
+        [InlineData("y*2*x", "2*x*y")]
+        [InlineData("2x + 2x", "4*x")]
+        [InlineData("2xy + 2xy", "4*x*y")]
+        [InlineData("2(x + y)", "2*x+2*y")]
+        //[InlineData("x^2 + 3,5xy + y -y^2 + xy - y", "x^2 - y^2 + 4,5xy")]
         public void EquationProcessorSimplify_ShouldSucceed(string input, string expected)
         {
             // Arrange

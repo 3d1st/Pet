@@ -1,11 +1,12 @@
 ﻿using Contracts.Operations;
+using Contracts.Terms;
 
 namespace Contracts
 {
     public interface IEquationParser
     {
-        (EquationBinaryOperationBase left, EquationBinaryOperationBase right) ParseEquation(string input);
+        (EquationTermBase left, EquationTermBase right) ParseEquation(string input);
         
-        EquationBinaryOperationBase Parse(string input);
+        EquationTermBase Parse(string input);
     }
 }

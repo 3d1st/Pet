@@ -1,15 +1,16 @@
 ﻿using Contracts.Operations;
 using Contracts.Terms;
+using static Utils.EquationTreeHelper;
 
 namespace EquationProcessor.Rulers
 {
-    public class CalculateAdditionVariableRule : IRule
+    public class CalculateSubtractionVariableRule : IRule
     {
         public bool TermMatchRule(EquationTermBase term)
         {
             bool matched =
                 term is EquationBinaryOperationBase operation &&
-                operation.Type == OperationsEnum.Addition &&
+                operation.Type == OperationsEnum.Subtraction &&
                 operation.Left is EquationVariable left &&
                 operation.Right is EquationVariable right &&
                 left.Name == right.Name;
@@ -19,9 +20,7 @@ namespace EquationProcessor.Rulers
 
         public EquationTermBase Invoke(EquationTermBase term)
         {
-            char variableName = ((EquationVariable) ((EquationBinaryOperationBase) term).Left).Name;
-                
-            return new MultiplicationOperation(new EquationConstant(2), new EquationVariable(variableName));
+            return CreateZero();
         }
     }
 }

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CodeJam;
-using CodeJam.Collections;
 using CodeJam.Strings;
 using Contracts;
 using Contracts.Exceptions;
 using Contracts.Operations;
 using Contracts.Terms;
+using static Utils.EquationTreeHelper;
 
 namespace Parser
 {
@@ -39,7 +39,7 @@ namespace Parser
             _StringOperations = Enumerable.Reverse(_Operations).Select(char.ToString).ToArray();
         }
 
-        public (EquationBinaryOperationBase left, EquationBinaryOperationBase right) ParseEquation(string input)
+        public (EquationTermBase left, EquationTermBase right) ParseEquation(string input)
         {
             Code.NotNullNorWhiteSpace(input, nameof(input));
 
@@ -69,7 +69,7 @@ namespace Parser
             return (left, right);
         }
 
-        public EquationBinaryOperationBase Parse(string input)
+        public EquationTermBase Parse(string input)
         {
             input = ClearInput(input);
 
@@ -84,7 +84,7 @@ namespace Parser
 
             var result = ConvertFromPolishReverseString(polish);
 
-            return result;
+            return result ?? CreateZero();
         }
 
         private static string ConvertToReversePolish(string input)
@@ -171,7 +171,7 @@ namespace Parser
             };
         }
 
-        private static EquationBinaryOperationBase ConvertFromPolishReverseString(string input)
+        private static EquationTermBase ConvertFromPolishReverseString(string input)
         {
             var operands = new Stack<EquationTermBase>();
             var buffer = new List<char>();
@@ -212,7 +212,7 @@ namespace Parser
                 }
             }
 
-            return operands.Peek() as EquationBinaryOperationBase;
+            return operands.Peek();
         }
 
         private static bool IsOperator(char @char)

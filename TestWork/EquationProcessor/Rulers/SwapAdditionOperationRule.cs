@@ -11,7 +11,10 @@ namespace EquationProcessor.Rulers
                 term is EquationBinaryOperationBase operation &&
                 operation.Type == OperationsEnum.Addition &&
                 operation.Left is EquationConstant &&
-                operation.Right is EquationVariable;
+                (
+                    operation.Right is EquationVariable ||
+                    operation.Right is EquationBinaryOperationBase
+                );
 
             return matched;
         }

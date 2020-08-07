@@ -18,8 +18,19 @@ namespace EquationProcessor
             new ZeroProcessingRule(),
             new SwapAdditionOperationRule(),
             new SwapMultiplicationRule(),
-            new ExchangeConstantInAdditionTerm()
+            new ExchangeConstantInAdditionTermRule(),
+            new ExchangeVariableInAdditionTermRule(),
+            new ExchangeVariableInMultiplicationTermRule(),
+            new CalculateAdditionVariableRule(),
+            new CalculateSubtractionVariableRule(),
+            new ExchangeVariableAndConstantInMultiplicationTermRule(),
+            new ExchangeMultipliersByNameRule()
         };
+
+        public EquationTermBase SwapSides(EquationTermBase left, EquationTermBase right)
+        {
+            return new SubtractionOperation(left, right);
+        }
 
         public EquationTermBase Simplify(EquationTermBase term)
         {

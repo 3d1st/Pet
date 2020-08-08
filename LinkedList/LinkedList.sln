@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedList", "LinkedList\LinkedList.csproj", "{B84A0B4C-DCF2-4E93-A144-3C7257F8C102}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayAlgo", "ArrayAlgo\ArrayAlgo.csproj", "{1EA9F686-FFDC-4FBB-BAAE-909CFF5EA214}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B84A0B4C-DCF2-4E93-A144-3C7257F8C102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B84A0B4C-DCF2-4E93-A144-3C7257F8C102}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B84A0B4C-DCF2-4E93-A144-3C7257F8C102}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B84A0B4C-DCF2-4E93-A144-3C7257F8C102}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EA9F686-FFDC-4FBB-BAAE-909CFF5EA214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EA9F686-FFDC-4FBB-BAAE-909CFF5EA214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EA9F686-FFDC-4FBB-BAAE-909CFF5EA214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EA9F686-FFDC-4FBB-BAAE-909CFF5EA214}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

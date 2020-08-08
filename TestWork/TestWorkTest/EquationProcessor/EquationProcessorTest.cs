@@ -51,6 +51,7 @@ namespace TestWorkTest.EquationProcessor
         [InlineData("x + x", "2*x")]
         [InlineData("x - x", "0")]
         [InlineData("x + 2 + x", "2*x+2")]
+        [InlineData("x+2-x", "2")]
         [InlineData("2x + x", "3*x")]
         [InlineData("x + 2x", "3*x")]
         [InlineData("y*2*x", "2*x*y")]

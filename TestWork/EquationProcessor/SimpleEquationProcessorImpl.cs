@@ -16,6 +16,7 @@ namespace EquationProcessor
             new SubtractConstantRule(),
             new CalculateConstantsRule(),
             new ZeroProcessingRule(),
+            new SwapSubtractionVariableToAdditionRule(),
             new SwapAdditionOperationRule(),
             new SwapMultiplicationRule(),
             new ExchangeConstantInAdditionTermRule(),
@@ -24,7 +25,7 @@ namespace EquationProcessor
             new CalculateAdditionVariableRule(),
             new CalculateSubtractionVariableRule(),
             new ExchangeVariableAndConstantInMultiplicationTermRule(),
-            new ExchangeMultipliersByNameRule()
+            new ExchangeMultipliersByNameRule(),
         };
 
         public EquationTermBase SwapSides(EquationTermBase left, EquationTermBase right)

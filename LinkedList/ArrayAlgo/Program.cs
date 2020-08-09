@@ -10,9 +10,10 @@ namespace ArrayAlgo
     {
         static void Main(string[] args)
         {
-            int[] source = {1, 0, 2, 3,7,6,5};
+            int[] source = {1, 0, 2, 3, 8, 6, 5};
 
-            Console.WriteLine("GetMissedViaBitArray: {0}",      GetMissedViaBitArray(source));
+            Console.WriteLine("GetMissedViaIntMask: {0}", GetMissedViaIntMask(source));
+            Console.WriteLine("GetMissedViaBitArray: {0}", GetMissedViaBitArray(source));
             foreach (var tuple in GetMissedViaMathAlgorithm(source))
             {
                 Console.WriteLine("GetMissedViaMathAlgorithm: {0}", tuple);                
@@ -20,6 +21,40 @@ namespace ArrayAlgo
             
         }
 
+        private static (int x, int y) GetMissedViaIntMask(int[] source)
+        {
+            int mask = 0;
+            int? x = null;
+
+            foreach (int t in source)
+            {
+                int bitMask = 1 << t;
+                mask |= bitMask;
+            }
+
+            int sourceLength = source.Length + 1;
+            
+            for (int i = 0; i < sourceLength; i++)
+            {
+                int tempMask = 1 << i;
+
+                if ((mask & tempMask) == 0)
+                {
+                    if (x == null)
+                    {
+                        x = i;
+                    }
+                    else
+                    {
+                        return ((int) x, i);
+                    }
+                }
+            }
+            
+            Debug.Assert(x != null, nameof(x) + " != null");
+            return ((int) x, sourceLength);
+        }
+x
         private static (int x, int y) GetMissedViaBitArray(int[] source)
         {
             int? x = null;

@@ -10,15 +10,11 @@ namespace ArrayAlgo
     {
         static void Main(string[] args)
         {
-            int[] source = {1, 0, 2, 3, 8, 6, 5};
+            int[] source = {1, 4, 2, 7, 8, 6, 5};
 
             Console.WriteLine("GetMissedViaIntMask: {0}", GetMissedViaIntMask(source));
             Console.WriteLine("GetMissedViaBitArray: {0}", GetMissedViaBitArray(source));
-            foreach (var tuple in GetMissedViaMathAlgorithm(source))
-            {
-                Console.WriteLine("GetMissedViaMathAlgorithm: {0}", tuple);                
-            }
-            
+            Console.WriteLine("GetMissedViaMathAlgorithm: {0}", GetMissedViaMathAlgorithm(source));
         }
 
         private static (int x, int y) GetMissedViaIntMask(int[] source)
@@ -83,45 +79,38 @@ namespace ArrayAlgo
             return ((int) x, source.Length);
         }
 
-        private static List<(int x, int y)> GetMissedViaMathAlgorithm(int[] source)
+        private static (int x, int y) GetMissedViaMathAlgorithm(int[] source)
         {
             int n = source.Length + 1;
-            int k = n - 1;
-            int nElementsSum = (k + 1) * (k + 2) / 2;
+            int nElementsSum = n * (n + 1) / 2;
+            long nElementSumOfPower = n * (n + 1) * (2 * n + 1) / 6;
             int sourceSum = 0;
+            long sourceSumOfPower = 0;
 
-            int xorN = 0;
-            int xorS = 0;
-
-            for (int i = 0; i < source.Length; i++)
+            foreach (int el in source)
             {
-                int el = source[i];
-
                 sourceSum += el;
-                xorS ^= el;
-                xorN ^= i;
+                sourceSumOfPower +=  (long)el * el;
             }
 
-            xorN ^= n;
+            int subtractionOfSums = nElementsSum - sourceSum;
+            long subtractionOfSumsOfPower = nElementSumOfPower - sourceSumOfPower;
 
-            int subtraction = nElementsSum - sourceSum;
-
-            var res = new List<(int x, int y)>();
             for (int i = 0; i <= n - 1; i++)
             {
                 for (int j = i + 1; j <= n; j++)
                 {
-                    if (i != j)
+                    bool matched =
+                        i != j &&
+                        i + j == subtractionOfSums &&
+                        (long) i * i + (long) j * j == subtractionOfSumsOfPower;
+                    if (matched)
                     {
-                        if (i + j == subtraction)
-                        {
-                            res.Add((i, j));
-                        }
+                        return (i, j);
                     }
                 }
             }
-
-            return res;
+            throw new InvalidOperationException();
         }
     }
 }
